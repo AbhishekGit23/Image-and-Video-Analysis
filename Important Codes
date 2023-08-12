@@ -1,0 +1,196 @@
+        Edge Detection
+I = rgb2gray(imread("flowers.jpg"));
+subplot(2, 4, 1),
+imshow(I)
+title('Grey Scale Image')
+%Sobel Edge Detection
+J = edge(I,'Sobel')
+subplot(2, 4, 1),
+imshow(I)
+title('Sobel')
+%Canny
+J1 = edge(I,"canny")
+subplot(2,4,3)
+imshow(J1)
+title("Canny Image")
+
+
+        Median Filtering
+I = rgb2gray(imread("onion.png"))
+J = imnoise(I,"salt & pepper",0.05)
+J = imnoise(I,'gaussian')
+J = imnoise(I,’speckle’)
+K = medfilt2(J); //removing noise 
+imshowpair(J,K,'montage')
+ 
+ 
+        Region Removal Algorithm
+imclose
+I = imread('circles.png');
+se = strel('disk',10);
+ closeBW = imclose(I,se);
+figure
+imshow(closeBW)
+imopen
+I = imread('circles.png');
+se = strel('disk',10);
+closeBW = imopen(I,se);
+figure
+imshow(closeBW)
+
+
+
+          Translate
+I = imread('pout.tif');
+J = imtranslate(I,[25.3, -10.1],'FillValues',255);
+imshow(I);
+title('Original Image');
+set(gca,'Visible','on');
+figure
+imshow(J);
+title('Translated Image');
+set(gca,'Visible','on');
+
+
+
+        	Resizing
+%Program to perform Resize the image into half
+A = imread("img.png");
+J= imresize(A,0.5);
+% Resizing the image to 2x using Nearest-Neighbour Interpolation
+resizedNN = imresize(original, 2, 'nearest');
+% Resizing the image to 2x using Bilinear Interpolation
+resizedBL = imresize(original, 2, "bilinear");
+
+
+
+        	Rotating
+%J = imrotate(I,angle,method,bbox)
+carRot = imrotate(car, 90, "bilinear");
+imshow(carRot)
+
+
+       	Image Enhancement
+1. Histogram equalization and Contrast Enhancement Techniques
+%Reading image and converting to grayscale
+scene = imread("scenery.jpg");
+scene = rgb2gray(scene);
+imhist(scene)
+%Three functions are particularly suitable for contrast enhancement
+% Adjust 
+sceneAdj = imadjust(scene);
+imhist(sceneAdj)
+% Equalizing 
+sceneEq = histeq(scene);
+imhist(sceneEq)
+% Adapthisteq 
+sceneAdEq = adapthisteq(scene);
+imhist(sceneAdEq)
+% Displaying Montage of images
+figuremontage({scene, sceneAdj, sceneEq, sceneAdEq},"Size",[1 4])
+title("Original Image and Enhanced Images using imadjust, histeq, and adapthisteq")
+
+
+
+         Morphological Operations
+I1=imread("text.jpg");
+BW=im2bw(I1);
+imgBothat = bwmorph(img, "bothat");
+
+% importing the image
+I=imread("text.jpg");
+%% Dilation and Erosion
+%Dilated Image
+se=strel("line",7,7);
+dilate=imdilate(I,se);
+
+% Eroded Image
+erode=imerode(I,se);
+
+%% Morphological Structuring ElementOperations
+% Opened Image
+open=imopen(I,se);
+
+% Closed Image
+close=imclose(I,se);
+
+
+
+        Unsharp mask filtering
+a=imread('rice.png');
+ha(1)=subplot(2,1,1);
+imshow(a)
+title("Original Image");
+b = imsharpen(a,'Radius',2,'Amount',1,'Threshold',0.5);
+ha(2)=subplot(2,1,2);
+imshow(b);
+title('Sharpened Image');
+linkaxes(ha, 'xy');
+
+
+
+        Quantization
+I=imread('sample.png');
+%calculate two threshold levels
+thresh=multithresh(I,2);
+%segment the image into three level using imquantize
+seg=imquantize(I,thresh);
+%convert the segmented image into color image using label2rgb and display it
+RGB=label2rgb(seg);
+imshow(RGB);
+
+
+
+        reshaping
+I=imread("flower.jpg");
+imshow(I);
+Ivector=I(:);% converting image into vector representation
+Ivector=reshape(I,1,[]);% reshaping the vector form
+imwrite(I,'flower.bmp')% converting image into bitmap or raster representation
+
+
+
+         Stretching and Histogram Matching
+I=imread("flower.jpg");
+s=imadjust(I,strechlim(I,[0.1,0.5]));
+
+matching=0:50
+ih=histeq(I,matching);
+
+
+
+         Logarithmic
+I=imread("flower.jpg");
+j=rgb2gray(I);
+doub_value=im2double(j);
+o1=2*log(1+doub_value);
+o2=2.5*log(1+doub_value);
+o3=3*log(1+doub_value);
+montage({I,o1,o2,o3},"size",[1,4])
+
+
+
+        Linear Operations
+a.	Multiply 
+ I = imread("moon.tif")
+I16 = uint16(I)
+J = immultiply(I16,16)
+b.	 Add
+I = imread(“moon.tif”)
+J= imread(“cameraman.tif”)
+add= imadd(I,J,uint16)
+c.	Subtraction
+I =imread(“moon.tif”)
+Sub = imsubstract(I,70)
+d.	Division 
+I = imread("moon.tif")
+I16 = uint16(I)
+J = imdivide(I16,16)
+
+
+
+       Logical Operations: 
+Not compliment 
+img = imread(“text.png”)
+Bw2 = imcompliment(img)
+
